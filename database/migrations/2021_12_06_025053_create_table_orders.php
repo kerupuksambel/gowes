@@ -16,12 +16,12 @@ class CreateTableOrders extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->bigInteger('biaya_servis');
+            $table->bigInteger('biaya_rakit')->nullable();
             $table->enum('status', ['dipesan', 'dibayar', 'selesai']);
-            $table->string('bukti_transfer', 128);
-            $table->string('resi', 32);
+            $table->string('bukti_transfer', 128)->nullable();
+            $table->string('resi', 32)->nullable();
             $table->bigInteger('durasi');
-            $table->boolean('is_diantar');
+            $table->boolean('is_dirakit');
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateTableOrders extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_orders');
+        Schema::dropIfExists('orders');
     }
 }

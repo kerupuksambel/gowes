@@ -32,6 +32,6 @@ class CreateTableComponents extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_components');
+        Schema::dropIfExists('components');
     }
 }

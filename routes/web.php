@@ -32,8 +32,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('cart')->name('cart.')->group(function(){
         Route::get('/', [CartController::class, 'index'])->name('index');
-        Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+        Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+        Route::get('/confirmation', [CartController::class, 'confirmation'])->name('confirmation');
         Route::get('/history', [CartController::class, 'history'])->name('history');
+        Route::get('/history/{id}', [CartController::class, 'historyDetail'])->name('historyDetail');
     });
 });
 

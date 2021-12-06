@@ -13,4 +13,9 @@ class OrderComponent extends Model
         'order_id',
         'component_id'
     ];
+
+    public function component()
+    {
+        return $this->hasOne(Component::class, 'id', 'component_id');
+    }
 }

@@ -11,7 +11,7 @@
         <div class="card-body">
             <div class="row">
                 @foreach ($g->members as $m)
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card">
                         <div class="bg-image hover-overlay ripple">
                             <img src="{{ $m->gambar }}" class="img-fluid w-100" />

@@ -16,6 +16,8 @@ class CreateTableOrderComponent extends Migration
         Schema::create('order_component', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
+            $table->integer('jumlah');
+            $table->integer('harga_satuan');
             $table->unsignedBigInteger('component_id');
             $table->timestamps();
         });
@@ -28,6 +30,6 @@ class CreateTableOrderComponent extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_order_component');
+        Schema::dropIfExists('order_component');
     }
 }

@@ -11,11 +11,16 @@ class Order extends Model
     protected $table = 'orders';
     protected $fillable = [
         'user_id',
-        'biaya_servis',
+        'biaya_rakit',
         'status', 
         'bukti_transfer',
         'resi',
         'durasi',
-        'is_diantar',
+        'is_dirakit',
     ];
+
+    public function components()
+    {
+        return $this->hasMany(OrderComponent::class, 'order_id', 'id');
+    }
 }
