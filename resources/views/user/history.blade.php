@@ -4,25 +4,28 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                {{-- <th>No</th> --}}
-                <th></th>
-                <th>Nama</th>
-                <th>Jumlah</th>
-                <th>Harga Satuan</th>
-                <th>Harga Subtotal</th>
+                <th>No</th>
+                <th>Tanggal Pembelian</th>
+                <th>Nilai Pembelian</th>
+                <th>Dirakit</th>
+                <th>Biaya Perakitan</th>
+                <th>Biaya Total</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($cart as $idx => $c)
+            @foreach ($orders as $idx => $o)
             <tr>
-                {{-- <td>{{ ++$idx }}</td> --}}
-                <td width="120px">
-                    <img src="{{ $c->gambar }}" width="100px">
+                <td>{{ ++$idx }}</td>
+                <td>{{ $o->created_at }}</td>
+                <td>{{ format_rupiah($o->subtotal) }}</td>
+                <td>{{ $o->is_dirakit }}</td>
+                <td>{{ format_rupiah($o->biaya_rakit) }}</td>
+                <td>{{ format_rupiah($o->biaya_rakit + $o->subtotal) }}</td>
+                <td>{{ $o->status }}</td>
+                <td>
+                    <a href="{{ route('cart.historyDetail', ['id' => $o->id]) }}" class="btn btn-primary">Detail</a>
                 </td>
-                <td>{{ $c->nama }}</td>
-                <td>{{ $c->jumlah }}</td>
-                <td>{{ format_rupiah($c->harga) }}</td>
-                <td>{{ format_rupiah($c->jumlah * $c->harga) }}</td>
             </tr>
             @endforeach
         </tbody>
