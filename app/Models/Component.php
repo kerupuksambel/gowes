@@ -17,4 +17,8 @@ class Component extends Model
         'harga',
         'stok',
     ];
+
+    public function group(){
+        return $this->belongsTo(ComponentGroup::class, 'group_id', 'id');
+    }
 }

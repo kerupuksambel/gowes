@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CatalogueController;
+use App\Http\Controllers\ComponentController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +20,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+// Untuk user
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('katalog')->name('katalog.')->group(function(){
+        Route::get('/', [CatalogueController::class, 'index'])->name('index');
+        Route::post('/add/{id}', [CatalogueController::class, 'add'])->name('add');
+    });
+
+    Route::prefix('cart')->name('cart.')->group(function(){
+        Route::get('/', [CartController::class, 'index'])->name('index');
+        Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+        Route::get('/history', [CartController::class, 'history'])->name('history');
+    });
+});
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

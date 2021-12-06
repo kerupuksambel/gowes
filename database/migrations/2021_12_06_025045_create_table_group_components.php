@@ -13,7 +13,7 @@ class CreateTableGroupComponents extends Migration
      */
     public function up()
     {
-        Schema::create('group_components', function (Blueprint $table) {
+        Schema::create('component_group', function (Blueprint $table) {
             $table->id();
             $table->string('nama', 128);
             $table->text('deskripsi');
@@ -28,6 +28,6 @@ class CreateTableGroupComponents extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_group_components');
+        Schema::dropIfExists('component_group');
     }
 }
