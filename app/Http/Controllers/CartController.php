@@ -13,35 +13,48 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cart = json_decode(Cookie::get('cart'), TRUE);
+        if(!Cookie::get('cart')){
+            $cart = [];
+        }else{
+            $cart = json_decode(Cookie::get('cart'), TRUE);
+        }
         $components = Component::whereIn('id', array_keys($cart))
         ->get();
         foreach ($components as $c) {
             $c->jumlah = $cart[$c->id];
         }
-        
+
         return view('user.cart', array('cart' => $components));
     }
 
     public function confirmation()
     {
-        $cart = json_decode(Cookie::get('cart'), TRUE);
+        if(!Cookie::get('cart')){
+            $cart = [];
+        }else{
+            $cart = json_decode(Cookie::get('cart'), TRUE);
+        }
         $components = Component::whereIn('id', array_keys($cart))
         ->get();
         foreach ($components as $c) {
             $c->jumlah = $cart[$c->id];
         }
-        
+
         return view('user.confirm', array('cart' => $components));
     }
 
     public function checkout(Request $request)
     {
+        if(!Cookie::get('cart')){
+            $cart = [];
+        }else{
+            $cart = json_decode(Cookie::get('cart'), TRUE);
+        }
         if($request->dirakit){
             $order = Order::create([
                 'user_id' => Auth::user()->id,
                 'biaya_rakit' => $request->biaya_servis,
-                'status' => 'dipesan', 
+                'status' => 'dipesan',
                 'durasi' => 5,
                 'is_dirakit' => TRUE,
             ]);
@@ -49,7 +62,7 @@ class CartController extends Controller
             $order = Order::create([
                 'user_id' => Auth::user()->id,
                 'biaya_rakit' => NULL,
-                'status' => 'dipesan', 
+                'status' => 'dipesan',
                 'durasi' => 2,
                 'is_dirakit' => FALSE,
             ]);
@@ -85,7 +98,7 @@ class CartController extends Controller
             $sum = 0;
             foreach ($o->components as $c) {
                 $sum += $c->jumlah * $c->harga_satuan;
-            } 
+            }
             $o->subtotal = $sum;
         }
 
@@ -96,11 +109,11 @@ class CartController extends Controller
     {
         $order = Order::where('user_id', Auth::user()->id)
         ->find($id);
-        
+
         $order->subtotal = 0;
         foreach ($order->components as $c) {
             $order->subtotal += $c->jumlah * $c->harga_satuan;
-        } 
+        }
 
         return view('user.history_detail', compact('orders'));
     }
