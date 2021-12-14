@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogueController;
 use App\Http\Controllers\ComponentController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/history', [CartController::class, 'history'])->name('history');
         Route::get('/history/{id}', [CartController::class, 'historyDetail'])->name('historyDetail');
         Route::post('/upload/{id}', [CartController::class, 'upload'])->name('upload');
+    });
+
+    Route::prefix('order')->name('order.')->group(function(){
+        Route::get('/', [OrderController::class, 'index'])->name('index');
     });
 });
 
