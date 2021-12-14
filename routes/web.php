@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/confirmation', [CartController::class, 'confirmation'])->name('confirmation');
         Route::get('/history', [CartController::class, 'history'])->name('history');
         Route::get('/history/{id}', [CartController::class, 'historyDetail'])->name('historyDetail');
+        Route::post('/upload/{id}', [CartController::class, 'upload'])->name('upload');
     });
 });
 

@@ -115,6 +115,25 @@ class CartController extends Controller
             $order->subtotal += $c->jumlah * $c->harga_satuan;
         }
 
-        return view('user.history_detail', compact('orders'));
+        return view('user.history_detail', compact('order', 'id'));
+    }
+
+    public function upload(Request $request, $id)
+    {
+        $request->validate([
+            'bukti' => 'required'
+        ]);
+        $order = Order::findOrFail($id);
+        $file = $request->file('bukti');
+        $path = $file->store('public/bukti');
+
+        $final_path = '/storage/' . $path;
+        $final_path = str_replace('/storage/public', '/storage', $final_path);
+        $order->bukti_transfer = $final_path;
+        $order->save();
+
+        return redirect()->route('cart.historyDetail', ['id' => $id]);
+
+        // Storage::move(path, target);
     }
 }
